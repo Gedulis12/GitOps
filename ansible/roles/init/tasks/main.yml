@@ -1,0 +1,45 @@
+- name: install packages
+  package:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - "{{ init_packages }}"
+
+- name: Make sure a wheel group is present
+  group:
+    name: wheel
+    state: present
+
+- name: sudo for wheel group
+  copy:
+    content: '%wheel ALL=(ALL:ALL) ALL'
+    dest: /etc/sudoers.d/wheel_nopasswd
+    mode: 0440
+
+- name: Add os users
+  user:
+    name: "{{ item }}"
+    state: present
+    groups: wheel
+    append: yes
+    createhome: yes
+  with_items: "{{ os_users }}"
+
+- name: Add SSH public keys
+  authorized_key:
+    user: "{{ item }}"
+    state: present
+    key: "{{ lookup('file', 'keys/{{ item }}') }}"
+  with_items: "{{ os_users }}"
+
+- name: Disallow SSH password authentication
+  lineinfile:
+    dest: /etc/ssh/sshd_config
+    regexp: "{{ item.From }}"
+    line: "{{ item.To }}"
+    state: present
+  with_items:
+    - { From: 'PasswordAuthentication yes', To: 'PasswordAuthentication no' }
+    - { From: '#PubkeyAuthentication yes', To: 'PubkeyAuthentication yes' }
+  notify:
+    - restart sshd

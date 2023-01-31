@@ -1,0 +1,5 @@
+- hosts: vms
+  become: true
+
+  roles:
+    - common
