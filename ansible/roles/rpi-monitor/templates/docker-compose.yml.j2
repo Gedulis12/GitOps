@@ -1,0 +1,20 @@
+# {{ ansible_managed }}
+---
+version: "3"
+
+services:
+  rpi-monitor:
+    container_name: rpi-monitor
+    image: michaelmiklis/rpi-monitor:latest
+    volumes:
+      - /opt/vc:/opt/vc
+      - /boot:/boot
+      - /sys:/dockerhost/sys:ro
+      - /etc:/dockerhost/etc:ro
+      - /proc:/dockerhost/proc:ro
+      - /usr/lib:/dockerhost/usr/lib:ro
+    devices:
+      - "dev/vchiq:/dev/vchiq"
+    ports:
+      - "{{ rpi_monitor_port }}:{{ rpi_monitor_port }}"
+    restart: unless-stopped

@@ -1,0 +1,31 @@
+---
+- name: Make sure that required packages are installed
+  package:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - "{{ docker_packages }}"
+
+- name: Make sure a docker group is present
+  group:
+    name: docker
+    state: present
+
+- name: Add os users
+  user:
+    name: "{{ item }}"
+    groups: docker
+    append: yes
+  with_items: "{{ os_users }}"
+
+- name: Make sure a docker service unit is running
+  ansible.builtin.systemd:
+    state: started
+    name: docker
+
+- name: Create a docker directory if it does not exist
+  become_user: "{{ docker_user }}"
+  ansible.builtin.file:
+    path: "{{ docker_home_dir }}"
+    state: directory
+    mode: '0755'

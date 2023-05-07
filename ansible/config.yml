@@ -1,0 +1,10 @@
+---
+# base os users
+os_users: ['gedas']
+
+# docker config
+docker_user: 'gedas' # list of docker users
+docker_home_dir: '/home/{{ docker_user }}/docker' # home dir for docker configs
+
+# rpi-monitor variables
+rpi_monitor_port: '8888'

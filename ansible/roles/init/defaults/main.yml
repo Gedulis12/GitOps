@@ -7,8 +7,3 @@ init_packages:
   - "neofetch"
   - "wget"
   - "htop"
-
-os_users:
-  - "gedas"
-
-

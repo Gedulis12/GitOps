@@ -1,0 +1,7 @@
+---
+- name: Restart rpi-monitor
+  community.docker.docker_compose:
+    project_src: "{{ docker_home_dir }}/rpi-monitor/"
+    build: false
+    restarted: true
+  become: false

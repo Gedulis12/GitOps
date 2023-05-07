@@ -1,4 +1,5 @@
-- name: install packages
+---
+- name: install base packages
   package:
     name: "{{ item }}"
     state: present
@@ -12,7 +13,7 @@
 
 - name: sudo for wheel group
   copy:
-    content: '%wheel ALL=(ALL:ALL) ALL'
+    content: '%wheel ALL=(ALL:ALL) NOPASSWD: ALL'
     dest: /etc/sudoers.d/wheel_nopasswd
     mode: 0440
 

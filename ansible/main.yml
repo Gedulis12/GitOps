@@ -1,5 +1,11 @@
 - hosts: vms
   become: true
 
+  pre_tasks:
+    - name: Load configuration.
+      ansible.builtin.include_vars: "{{ item }}"
+      loop:
+        - config.yml
+
   roles:
-    - common
+    - rpi-monitor
