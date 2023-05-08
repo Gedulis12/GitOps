@@ -7,7 +7,7 @@ docker_user: 'gedas' # list of docker users
 docker_home_dir: '/home/{{ docker_user }}/docker' # home dir for docker configs
 
 # rpi-monitor config
-rpi_monitor_port: "8888"
+rpi_monitor_port: 8888
 
 # wireguard config
 wg_port: 51820
@@ -16,4 +16,8 @@ wg_internal_subnet: 10.13.13.0
 wg_logs_enabled: true
 
 # theloung config (irc web client)
-thelounge_port: "9999"
+thelounge_port: 9999
+
+# gitea config
+gitea_web_ui_port: 3000
+gitea_ssh_port: 222
