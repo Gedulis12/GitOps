@@ -1,0 +1,7 @@
+---
+- name: Restart thelounge
+  community.docker.docker_compose:
+    project_src: "{{ docker_home_dir }}/thelounge/"
+    build: false
+    restarted: true
+  become: false

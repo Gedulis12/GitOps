@@ -1,8 +1,8 @@
 ---
-- name: Create a directory for wireguard if it does not exist
+- name: Create a directory for thelounge if it does not exist
   become_user: "{{ docker_user }}"
   ansible.builtin.file:
-    path: "{{ docker_home_dir }}/wireguard"
+    path: "{{ docker_home_dir }}/thelounge"
     state: directory
     mode: '0755'
   become: false
@@ -10,10 +10,10 @@
 - name: Copy templated files into place.
   ansible.builtin.template:
     src: templates/{{ item.src }}
-    dest: "{{ docker_home_dir }}/wireguard/{{ item.dest }}"
+    dest: "{{ docker_home_dir }}/thelounge/{{ item.dest }}"
     mode: 0644
   loop:
     - src: docker-compose.yml.j2
       dest: docker-compose.yml
       become: false
-  notify: "Restart wireguard"
+  notify: "Restart thelounge"
