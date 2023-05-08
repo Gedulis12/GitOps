@@ -9,4 +9,5 @@
 
   roles:
     - wireguard
+    - irc
 
