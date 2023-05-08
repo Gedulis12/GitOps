@@ -1,0 +1,7 @@
+---
+- name: Restart wireguard
+  community.docker.docker_compose:
+    project_src: "{{ docker_home_dir }}/wireguard/"
+    build: false
+    restarted: true
+  become: false

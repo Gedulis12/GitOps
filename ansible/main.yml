@@ -8,4 +8,5 @@
         - config.yml
 
   roles:
-    - rpi-monitor
+    - wireguard
+

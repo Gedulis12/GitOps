@@ -1,0 +1,27 @@
+# {{ ansible_managed }}
+---
+version: "2.1"
+services:
+  wireguard:
+    image: lscr.io/linuxserver/wireguard:latest
+    container_name: wireguard
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Vilnius
+      - SERVERPORT={{ wg_port }} #optional 51820
+      - PEERS={{ wg_peer_count }} #optional 3
+      - INTERNAL_SUBNET={{ wg_internal_subnet }} #optional 10.13.13.0
+      - ALLOWEDIPS=0.0.0.0/0 #optional
+      - LOG_CONFS=true #optional
+    volumes:
+      - {{ docker_home_dir }}/wireguard/config:/config
+      - /lib/modules:/lib/modules
+    ports:
+      - {{ wg_port }}:{{ wg_port }}/udp
+    sysctls:
+      - net.ipv4.conf.all.src_valid_mark=1
+    restart: unless-stopped

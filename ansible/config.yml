@@ -6,5 +6,11 @@ os_users: ['gedas']
 docker_user: 'gedas' # list of docker users
 docker_home_dir: '/home/{{ docker_user }}/docker' # home dir for docker configs
 
-# rpi-monitor variables
+# rpi-monitor config
 rpi_monitor_port: '8888'
+
+# wireguard config
+wg_port: 51820
+wg_peer_count: 2
+wg_internal_subnet: 10.13.13.0
+wg_logs_enabled: true

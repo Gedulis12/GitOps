@@ -1,0 +1,21 @@
+---
+- name: Create a directory for wireguard if it does not exist
+  become_user: "{{ docker_user }}"
+  ansible.builtin.file:
+    path: "{{ docker_home_dir }}/wireguard"
+    state: directory
+    mode: '0755'
+  become: false
+
+- name: Copy templated files into place.
+  ansible.builtin.template:
+    src: templates/{{ item.src }}
+    dest: "{{ docker_home_dir }}/wireguard/{{ item.dest }}"
+    mode: 0644
+  loop:
+    - src: docker-compose.yml.j2
+      dest: docker-compose.yml
+        #  notify: Restart internet-monitoring
+        #  TODO handler to restart container
+  become: false
+  notify: "Restart wireguard"
