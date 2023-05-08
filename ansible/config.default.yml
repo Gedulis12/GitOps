@@ -5,6 +5,7 @@ os_users: ['gedas']
 # docker config
 docker_user: 'gedas' # list of docker users
 docker_home_dir: '/home/{{ docker_user }}/docker' # home dir for docker configs
+timezone: "Europe/Vilnius"
 
 # rpi-monitor config
 rpi_monitor_port: 8888
@@ -15,9 +16,15 @@ wg_peer_count: 2
 wg_internal_subnet: 10.13.13.0
 wg_logs_enabled: true
 
-# theloung config (irc web client)
+# thelounge config (irc web client)
 thelounge_port: 9999
 
 # gitea config
 gitea_web_ui_port: 3000
 gitea_ssh_port: 222
+
+# pihole config
+pihole_web_ui_port: 83
+pihole_https_port: 9443
+pihole_server_ip: 192.168.122.119
+pihole_webpass: "password"

@@ -5,10 +5,12 @@
     - name: Load configuration.
       ansible.builtin.include_vars: "{{ item }}"
       loop:
+        - config.default.yml
         - config.yml
 
   roles:
     - wireguard
     - irc
     - git
+    - pihole
 
