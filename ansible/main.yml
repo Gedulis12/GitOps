@@ -9,8 +9,8 @@
         - config.yml
 
   roles:
-    - wireguard
-    - irc
     - git
     - pihole
-
+    - irc
+    - wireguard
+    - dotfiles

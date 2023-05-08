@@ -1,0 +1,24 @@
+---
+- name: Copy configs from temp dir.
+  ansible.builtin.copy:
+    src: ~/dotfiles-tmp/
+    dest: ~/
+    remote_src: yes
+    directory_mode: yes
+  become_user: "{{ item }}"
+  with_items: "{{ os_users }}"
+
+- name: Remove temp dir.
+  ansible.builtin.command: rm -rf ~/dotfiles-tmp
+  become_user: "{{ item }}"
+  with_items: "{{ os_users }}"
+
+- name: Remove .git from home.
+  ansible.builtin.command: rm -rf ~/.git
+  become_user: "{{ item }}"
+  with_items: "{{ os_users }}"
+
+- name: Apply changes to git config.
+  ansible.builtin.command: /usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME config status.showUntrackedFiles no
+  become_user: "{{ item }}"
+  with_items: "{{ os_users }}"

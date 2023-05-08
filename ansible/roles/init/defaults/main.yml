@@ -7,3 +7,4 @@ init_packages:
   - "neofetch"
   - "wget"
   - "htop"
+  - "vim"
