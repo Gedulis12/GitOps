@@ -1,23 +1,21 @@
 ---
 - name: Check whether the dotfiles directory already exists.
+  become: true
   ansible.builtin.stat:
-    path: ~/.dotfiles
+    path: /home/{{ item }}/.dotfiles
   register: dotfiles_dir
   loop: "{{ os_users }}"
   loop_control:
     loop_var: item
-  become: true
-  become_user: "{{ item }}"
 
 
 - name: Clone a repo with separate git directory
+  become: true
   ansible.builtin.git:
     repo: https://github.com/Gedulis12/dotfiles
-    dest: ~/dotfiles-tmp
-    separate_git_dir: ~/.dotfiles
+    dest: /home/{{ item }}/dotfiles-tmp
+    separate_git_dir: /home/{{ item }}/.dotfiles
     update: no
-  become: true
-  become_user: "{{ item }}"
   loop: "{{ os_users }}"
   loop_control:
     loop_var: item
@@ -29,12 +27,11 @@
     - Apply changes to git config.
 
 - name: Pull changes if repository exists
+  become: true
   ansible.builtin.git:
     repo: https://github.com/Gedulis12/dotfiles
-    dest: ~/dotfiles-tmp
+    dest: /home/{{ item }}/dotfiles-tmp
     update: yes
-  become: true
-  become_user: "{{ item }}"
   loop: "{{ os_users }}"
   loop_control:
     loop_var: item

@@ -1,22 +1,23 @@
 ---
 - name: Create a directory for gitea if it does not exist
-  become_user: "{{ docker_user }}"
+  become: true
   ansible.builtin.file:
     path: "{{ docker_home_dir }}/gitea"
     state: directory
     mode: '0755'
-  become: false
+    owner: "{{ docker_user }}"
+    group: "{{ docker_user }}"
 
 - name: Copy templated files into place.
+  become: true
   ansible.builtin.template:
     src: templates/{{ item.src }}
     dest: "{{ docker_home_dir }}/gitea/{{ item.dest }}"
     mode: 0644
+    owner: "{{ docker_user }}"
+    group: "{{ docker_user }}"
   loop:
     - src: docker-compose.yml.j2
       dest: docker-compose.yml
-        #  notify: Restart internet-monitoring
-        #  TODO handler to restart container
-  become: false
   notify: "Restart gitea"
 

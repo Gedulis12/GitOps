@@ -4,4 +4,4 @@
     project_src: "{{ docker_home_dir }}/pihole/"
     build: false
     restarted: true
-  become: false
+  become_user: "{{ docker_user }}"

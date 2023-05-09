@@ -1,4 +1,4 @@
-- hosts: vms
+- hosts: pi
   become: true
 
   pre_tasks:
@@ -13,4 +13,4 @@
     - pihole
     - irc
     - wireguard
-    - dotfiles
+      #    - dotfiles
