@@ -1,7 +1,7 @@
 ---
-- name: Create a directory for wireguard if it does not exist
+- name: Create a directory for jellyfin if it does not exist
   ansible.builtin.file:
-    path: "{{ docker_home_dir }}/wireguard"
+    path: "{{ docker_home_dir }}/jellyfin"
     state: directory
     mode: '0755'
     owner: "{{ ansible_user }}"
@@ -10,11 +10,11 @@
 - name: Copy templated files into place.
   ansible.builtin.template:
     src: templates/{{ item.src }}
-    dest: "{{ docker_home_dir }}/wireguard/{{ item.dest }}"
+    dest: "{{ docker_home_dir }}/jellyfin/{{ item.dest }}"
     mode: 0644
     owner: "{{ ansible_user }}"
     group: "{{ ansible_user }}"
   loop:
     - src: docker-compose.yml.j2
       dest: docker-compose.yml
-  notify: "Restart wireguard"
+  notify: "Restart jellyfin"

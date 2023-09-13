@@ -4,4 +4,3 @@
     project_src: "{{ docker_home_dir }}/thelounge/"
     build: false
     restarted: true
-  become_user: "{{ docker_user }}"

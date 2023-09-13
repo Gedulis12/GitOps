@@ -1,10 +1,6 @@
 ---
-# base os users
-os_users: ['gedas']
-
 # docker config
-docker_user: 'gedas' # list of docker users
-docker_home_dir: '/home/{{ docker_user }}/docker' # home dir for docker configs
+docker_home_dir: '/home/{{ ansible_user }}/docker' # home dir for docker configs
 timezone: "Europe/Vilnius"
 
 # rpi-monitor config
@@ -26,5 +22,16 @@ gitea_ssh_port: 222
 # pihole config
 pihole_web_ui_port: 83
 pihole_https_port: 9443
-pihole_server_ip: 192.168.122.119
+pihole_server_ip: 192.168.0.210
 pihole_webpass: "password"
+
+# jellyfin config
+jellyfin:
+  port: 8096
+  volumes:
+    tv_shows_dir: /data/media/tv
+    movies_dir: /data/media/tv
+    music_dir: /data/media/music
+    stand_up_comedy_dir: /data/media/stand-up-comedy
+    other_media_dir: /data/media/other
+    podcasts_dir: /data/media/podcasts

@@ -1,7 +1,7 @@
 ---
 - name: Restart gitea
   community.docker.docker_compose:
-    project_src: "{{ docker_home_dir }}/gitea/"
+    project_src: "{{ ansible_user }}/gitea/"
     build: false
     restarted: true
-  become_user: "{{ docker_user }}"
+  become_user: "{{ ansible_user }}"

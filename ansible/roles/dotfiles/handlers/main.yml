@@ -1,26 +1,18 @@
 ---
 - name: Copy configs from temp dir.
-  become: true
   ansible.builtin.copy:
-    src: /home/{{ item }}/dotfiles-tmp/
-    dest: /home/{{ item }}/
+    src: /home/{{ ansible_user }}/dotfiles-tmp/
+    dest: /home/{{ ansible_user }}/
     remote_src: yes
     directory_mode: yes
-    group: "{{ item }}"
-    owner: "{{ item }}"
-  with_items: "{{ os_users }}"
+    group: "{{ ansible_user }}"
+    owner: "{{ ansible_user }}"
 
 - name: Remove temp dir.
-  become: true
-  ansible.builtin.command: rm -rf /home/{{ item }}/dotfiles-tmp
-  with_items: "{{ os_users }}"
+  ansible.builtin.command: rm -rf /home/{{ ansible_user }}/dotfiles-tmp
 
 - name: Remove .git from home.
-  become: true
-  ansible.builtin.command: rm -rf /home/{{ item }}/.git
-  with_items: "{{ os_users }}"
+  ansible.builtin.command: rm -rf /home/{{ ansible_user }}/.git
 
 - name: Apply changes to git config.
-  become: true
-  ansible.builtin.command: /usr/bin/git --git-dir=/home/{{ item }}/.dotfiles/ --work-tree=/home/{{ item }} config status.showUntrackedFiles no
-  with_items: "{{ os_users }}"
+  ansible.builtin.command: /usr/bin/git --git-dir=/home/{{ ansible_user }}/.dotfiles/ --work-tree=/home/{{ ansible_user }} config status.showUntrackedFiles no

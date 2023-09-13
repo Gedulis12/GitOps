@@ -1,5 +1,4 @@
-- hosts: pi
-  become: true
+- hosts: vms
 
   pre_tasks:
     - name: Load configuration.
@@ -9,8 +8,4 @@
         - config.yml
 
   roles:
-    - git
-    - pihole
-    - irc
-    - wireguard
-      #    - dotfiles
+    - jellyfin

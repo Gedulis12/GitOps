@@ -1,0 +1,22 @@
+---
+vms:
+  hosts:
+    mint:
+      ansible_host: 192.168.122.136
+      ansible_port: 22
+      ansible_user: gedas
+  vars:
+    ansible_ssh_common_args: "-o identitiesonly=yes"
+    ansible_python_interpreter: /usr/bin/python3
+physical:
+  hosts:
+    pi:
+      ansible_host: 192.168.0.210
+      ansible_port: 22
+      ansible_user: gedas
+    tvinksonas:
+      ansible_host: 192.168.0.135
+      ansible_port: 22
+      ansible_user: gedas
+  vars:
+    ansible_ssh_common_args: "-o identitiesonly=yes"

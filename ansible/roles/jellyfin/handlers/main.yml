@@ -1,6 +1,6 @@
 ---
-- name: Restart pihole
+- name: Restart jellyfin
   community.docker.docker_compose:
-    project_src: "{{ docker_home_dir }}/pihole/"
+    project_src: "{{ docker_home_dir }}/jellyfin/"
     build: false
     restarted: true

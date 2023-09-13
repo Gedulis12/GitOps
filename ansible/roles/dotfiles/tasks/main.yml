@@ -1,25 +1,16 @@
 ---
 - name: Check whether the dotfiles directory already exists.
-  become: true
   ansible.builtin.stat:
-    path: /home/{{ item }}/.dotfiles
+    path: /home/{{ ansible_user }}/.dotfiles
   register: dotfiles_dir
-  loop: "{{ os_users }}"
-  loop_control:
-    loop_var: item
-
 
 - name: Clone a repo with separate git directory
-  become: true
   ansible.builtin.git:
     repo: https://github.com/Gedulis12/dotfiles
-    dest: /home/{{ item }}/dotfiles-tmp
-    separate_git_dir: /home/{{ item }}/.dotfiles
+    dest: /home/{{ ansible_user }}/dotfiles-tmp
+    separate_git_dir: /home/{{ ansible_user }}/.dotfiles
     update: no
-  loop: "{{ os_users }}"
-  loop_control:
-    loop_var: item
-  when: not dotfiles_dir.results[os_users.index(item)].stat.exists
+  when: not dotfiles_dir.stat.exists
   notify: 
     - Copy configs from temp dir.
     - Remove temp dir.
@@ -27,14 +18,10 @@
     - Apply changes to git config.
 
 - name: Pull changes if repository exists
-  become: true
   ansible.builtin.git:
     repo: https://github.com/Gedulis12/dotfiles
-    dest: /home/{{ item }}/dotfiles-tmp
+    dest: /home/{{ ansible_user }}/dotfiles-tmp
     update: yes
-  loop: "{{ os_users }}"
-  loop_control:
-    loop_var: item
   notify: 
     - Copy configs from temp dir.
     - Remove temp dir.

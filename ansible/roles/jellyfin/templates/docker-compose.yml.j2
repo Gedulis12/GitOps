@@ -1,0 +1,22 @@
+# {{ ansible_managed }}
+---
+version: "2.1"
+services:
+  jellyfin:
+    image: lscr.io/linuxserver/jellyfin:latest
+    container_name: jellyfin
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ={{ timezone }}
+    volumes:
+      - {{ docker_home_dir }}/jellyfin/config:/config
+      - {{ jellyfin.volumes.tv_shows_dir }}:/tv
+      - {{ jellyfin.volumes.movies_dir }}:/movies
+      - {{ jellyfin.volumes.music_dir }}:/music
+      - {{ jellyfin.volumes.stand_up_comedy_dir }}:/stand-up-comedy
+      - {{ jellyfin.volumes.other_media_dir }}:/other
+      - {{ jellyfin.volumes.podcasts_dir }}:/podcasts
+    ports:
+      - {{ jellyfin.port }}:8096
+    restart: unless-stopped

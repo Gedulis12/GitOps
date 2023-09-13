@@ -1,36 +1,43 @@
 ---
 - name: update apt cache
+  become: true
   ansible.builtin.apt:
     update_cache: yes
   when: ansible_pkg_mgr == "apt"
 
 - name: update yum cache
+  become: true
   ansible.builtin.yum:
     update_cache: yes
   when: ansible_pkg_mgr == "yum"
 
 - name: update apk cache
+  become: true
   community.general.apk:
     update_cache: yes
   when: ansible_pkg_mgr == "apk"
 
 - name: update dnf cache
+  become: true
   ansible.builtin.dnf:
     update_cache: yes
   when: ansible_pkg_mgr == "dnf"
 
 - name: update zypper cache
+  become: true
   community.general.zypper:
     name: zypper
     update_cache: yes
   when: ansible_pkg_mgr == "zypper"
 
 - name: update pacman cache
+  become: true
   community.general.pacman:
     update_cache: yes
   when: ansible_pkg_mgr == "pacman"
 
 - name: install base packages
+  become: true
   package:
     name: "{{ item }}"
     state: present
@@ -38,35 +45,37 @@
     - "{{ init_packages }}"
 
 - name: Make sure a wheel group is present
+  become: true
   group:
     name: wheel
     state: present
 
 - name: sudo for wheel group
+  become: true
   copy:
     content: '%wheel ALL=(ALL:ALL) NOPASSWD: ALL'
     dest: /etc/sudoers.d/wheel_nopasswd
     mode: 0440
 
-- name: Add os users
+- name: Add os user
+  become: true
   user:
-    name: "{{ item }}"
+    name: "{{ ansible_user }}"
     state: present
     groups: wheel
     append: yes
     createhome: yes
     shell: /bin/bash
-  with_items: "{{ os_users }}"
 
 
 - name: Add SSH public keys
   authorized_key:
-    user: "{{ item }}"
+    user: "{{ ansible_user }}"
     state: present
-    key: "{{ lookup('file', 'keys/{{ item }}') }}"
-  with_items: "{{ os_users }}"
+    key: "{{ lookup('file', 'keys/{{ ansible_user }}') }}"
 
 - name: Disallow SSH password authentication
+  become: true
   lineinfile:
     dest: /etc/ssh/sshd_config
     regexp: "{{ item.From }}"
