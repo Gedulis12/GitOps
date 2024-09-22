@@ -17,5 +17,21 @@
   loop:
     - src: docker-compose.yml.j2
       dest: docker-compose.yml
-  notify: "Restart gitea"
+    - src: docker-compose-runner.yml.j2
+      dest: docker-compose-runner.yml
+    - src: config.yml.j2
+      dest: config.yml
+    - src: start.sh.j2
+      dest: start.sh
+    - src: stop.sh.j2
+      dest: stop.sh
+    - src: restart.sh.j2
+      dest: restart.sh
 
+- name: Making .sh files executable
+  file: dest={{ docker_home_dir }}/gitea/{{ item.file }} mode=a+x
+  loop:
+    - file: start.sh
+    - file: stop.sh
+    - file: restart.sh
+  notify: "Initial start gitea"

@@ -1,7 +1,10 @@
 ---
-- name: Restart gitea
+- name: Initial start gitea
   community.docker.docker_compose:
-    project_src: "{{ ansible_user }}/gitea/"
+    project_src: "{{ docker_home_dir }}/gitea/"
     build: false
     restarted: true
-  become_user: "{{ ansible_user }}"
+  notify: Restart gitea
+
+- name: Restart gitea
+  ansible.builtin.shell: "sleep 10 && {{ docker_home_dir }}/gitea/restart.sh"

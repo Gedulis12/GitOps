@@ -16,8 +16,14 @@ wg_logs_enabled: true
 thelounge_port: 9999
 
 # gitea config
-gitea_web_ui_port: 3000
-gitea_ssh_port: 222
+gitea:
+  web_ui_port: 3000
+  ssh_port: 222
+  db_user: gitea
+  db_password: gitea
+  db_database: gitea
+  db_root_password: gitea
+  network: gitea
 
 # pihole config
 pihole_web_ui_port: 83

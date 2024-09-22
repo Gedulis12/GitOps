@@ -1,0 +1,5 @@
+#!/bin/bash
+set -xe
+
+docker-compose -f ./docker-compose-runner.yml down --remove-orphans 
+docker-compose -f ./docker-compose.yml down --remove-orphans 

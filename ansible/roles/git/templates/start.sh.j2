@@ -1,0 +1,9 @@
+#!/bin/bash
+set -xe
+
+rm -f .env
+docker-compose -f ./docker-compose.yml up -d --remove-orphans 
+sleep 8
+REGISTRATION_TOKEN=$(docker exec -u 1000 gitea gitea --config /data/gitea/conf/app.ini actions grt)
+echo "REGISTRATION_TOKEN=$REGISTRATION_TOKEN" > .env
+docker-compose -f ./docker-compose-runner.yml up -d

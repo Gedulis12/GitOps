@@ -1,0 +1,15 @@
+---
+version: "3.8"
+
+services:
+  runner:
+    container_name: gitea_act_runner
+    image: gitea/act_runner:nightly
+    environment:
+      CONFIG_FILE: /config.yml
+      GITEA_INSTANCE_URL: "http://{{ ansible_host }}:{{ gitea.web_ui_port }}"
+      GITEA_RUNNER_REGISTRATION_TOKEN: ${REGISTRATION_TOKEN}
+    volumes:
+      - ./config.yml:/config.yml
+      - ./runner_data:/data
+      - /var/run/docker.sock:/var/run/docker.sock
