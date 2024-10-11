@@ -15,9 +15,9 @@ services:
      - USER_GID=1000
      - GITEA__database__DB_TYPE=mysql
      - GITEA__database__HOST=db:3306
-     - GITEA__database__NAME={{ gitea.database }}
-     - GITEA__database__USER={{ gitea.db_user }}
-     - GITEA__database__PASSWD={{ gitea.db_password }}
+     - GITEA__database__NAME={{ gitea.db. database }}
+     - GITEA__database__USER={{ gitea.db.user }}
+     - GITEA__database__PASSWD={{ gitea.db.password }}
      - GITEA__security__INSTALL_LOCK=true
     restart: always
     networks:
@@ -36,10 +36,10 @@ services:
     image: mysql:8
     restart: always
     environment:
-      - MYSQL_ROOT_PASSWORD={{ gitea.db_root_password }}
-      - MYSQL_USER={{ gitea.db_user }}
-      - MYSQL_PASSWORD={{ gitea.db_password }}
-      - MYSQL_DATABASE={{ gitea.database }}
+      - MYSQL_ROOT_PASSWORD={{ gitea.db.root_password }}
+      - MYSQL_USER={{ gitea.db.user }}
+      - MYSQL_PASSWORD={{ gitea.db.password }}
+      - MYSQL_DATABASE={{ gitea.db.database }}
     networks:
       - {{ gitea.network }}
     volumes:

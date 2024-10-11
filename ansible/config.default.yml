@@ -19,11 +19,12 @@ thelounge_port: 9999
 gitea:
   web_ui_port: 3000
   ssh_port: 222
-  db_user: gitea
-  db_password: gitea
-  db_database: gitea
-  db_root_password: gitea
   network: gitea
+  db:
+    user: gitea
+    password: gitea
+    database: gitea
+    root_password: gitea
 
 # pihole config
 pihole_web_ui_port: 83
