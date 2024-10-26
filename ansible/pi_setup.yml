@@ -9,3 +9,6 @@
 
   roles:
     - git
+    - irc
+    - jellyfin
+    - nginx

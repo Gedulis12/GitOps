@@ -1,0 +1,55 @@
+---
+- name: Create a directory for nginx if it does not exist
+  ansible.builtin.file:
+    path: "{{ docker_home_dir }}/{{ item.dest }}"
+    state: directory
+    mode: '0755'
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+  loop:
+    - dest: nginx
+    - dest: nginx/conf.d
+    - dest: nginx/log
+    - dest: nginx/selfsigned
+
+- name: Create private key (RSA, 4096 bits)
+  community.crypto.openssl_privatekey:
+    path: "{{ docker_home_dir }}/nginx/selfsigned/selfsigned.key"
+
+- name: Create self-signed certificate
+  community.crypto.x509_certificate:
+    path: "{{ docker_home_dir }}/nginx/selfsigned/selfsigned.pem"
+    privatekey_path: "{{ docker_home_dir }}/nginx/selfsigned/selfsigned.key"
+    provider: selfsigned
+
+- name: Copy templated docker-compose file.
+  ansible.builtin.template:
+    src: templates/{{ item.src }}
+    dest: "{{ docker_home_dir }}/nginx/{{ item.dest }}"
+    mode: 0644
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+  loop:
+    - src: docker-compose.yml.j2
+      dest: docker-compose.yml
+  notify: "Restart nginx"
+
+- name: Copy templated nginx files.
+  ansible.builtin.template:
+    src: templates/{{ item.src }}
+    dest: "{{ docker_home_dir }}/nginx/conf.d/{{ item.dest }}"
+    mode: 0644
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+  loop:
+    - src: nginx.conf.j2
+      dest: nginx.conf
+    - src: jellyfin.conf.j2
+      dest: jellyfin.conf
+    - src: thelounge.conf.j2
+      dest: thelounge.conf
+    - src: pihole.conf.j2
+      dest: pihole.conf
+    - src: rpi-monitor.conf.j2
+      dest: rpi-monitor.conf
+  notify: "Restart nginx"

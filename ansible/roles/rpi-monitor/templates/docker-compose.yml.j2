@@ -16,5 +16,5 @@ services:
     devices:
       - "dev/vchiq:/dev/vchiq"
     ports:
-      - "{{ rpi_monitor_port }}:{{ rpi_monitor_port }}"
+      - "{{ rpi_monitor.port }}:{{ rpi_monitor.port }}"
     restart: unless-stopped

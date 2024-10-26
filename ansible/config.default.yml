@@ -4,7 +4,10 @@ docker_home_dir: '/home/{{ ansible_user }}/docker' # home dir for docker configs
 timezone: "Europe/Vilnius"
 
 # rpi-monitor config
-rpi_monitor_port: 8888
+rpi_monitor:
+  ip: 192.168.0.210
+  port: 8888
+  fqdn: rpi-monitor.lan
 
 # wireguard config
 wg_port: 51820
@@ -13,11 +16,16 @@ wg_internal_subnet: 10.13.13.0
 wg_logs_enabled: true
 
 # thelounge config (irc web client)
-thelounge_port: 9999
+thelounge:
+  ip: 192.168.0.210
+  fqdn: irc.lan
+  port: 9999
 
 # gitea config
 gitea:
-  web_ui_port: 3000
+  ip: 192.168.0.210
+  fqdn: gitea.lan
+  port: 3000
   ssh_port: 222
   network: gitea
   db:
@@ -27,14 +35,18 @@ gitea:
     root_password: gitea
 
 # pihole config
-pihole_web_ui_port: 83
-pihole_https_port: 9443
-pihole_server_ip: 192.168.0.210
-pihole_webpass: "password"
+pihole:
+  ip: 192.168.0.210
+  port: 83
+  https_port: 9443
+  fqdn: pihole.lan
+  webpass: "password"
 
 # jellyfin config
 jellyfin:
+  ip: 192.168.0.135
   port: 8096
+  fqdn: jellyfin.lan
   volumes:
     tv_shows_dir: /data/media/tv
     movies_dir: /data/media/tv
@@ -42,3 +54,8 @@ jellyfin:
     stand_up_comedy_dir: /data/media/stand-up-comedy
     other_media_dir: /data/media/other
     podcasts_dir: /data/media/podcasts
+
+# nginx config
+nginx:
+  http_port: 80
+  https_port: 443

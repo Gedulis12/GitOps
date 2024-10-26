@@ -12,12 +12,12 @@ services:
       - 53:53/tcp
       - 53:53/udp
       - 67:67/udp
-      - {{ pihole_web_ui_port }}:80/tcp
-      - {{ pihole_https_port }}:443/tcp
+      - {{ pihole.port }}:80/tcp
+      - {{ pihole.https_port }}:443/tcp
     environment:
       TZ: "{{ timezone }}"
-      WEBPASSWORD: "{{ pihole_webpass }}"
-      ServerIP: "{{ pihole_server_ip }}"
+      WEBPASSWORD: "{{ pihole.webpass }}"
+      ServerIP: "{{ pihole.ip }}"
     dns:
       - 127.0.0.1
       - 1.1.1.1

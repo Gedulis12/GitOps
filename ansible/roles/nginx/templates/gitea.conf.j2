@@ -1,0 +1,28 @@
+# {{ ansible_managed }}
+server {
+    listen 80;
+    listen [::]:80;
+    server_name     {{ gitea.fqdn }};
+    return 302 https://$server_name$request_uri;
+}
+
+server {
+    listen 443 ssl http2;
+    listen [::]:443 ssl http2;
+    server_name {{ gitea.fqdn }};
+
+    ssl_certificate /etc/nginx/selfsigned/selfsigned.pem;
+    ssl_certificate_key /etc/nginx/selfsigned/selfsigned.key;
+
+    access_log  /var/log/nginx/gitea.access.log;
+    error_log  /var/log/nginx/gitea.error.log;
+
+    location / {
+        proxy_pass "http://{{ gitea.ip }}:{{ gitea.port }}";
+
+        add_header X-Frame-Options DENY;
+        add_header X-Content-Type-Options nosniff;
+        add_header X-XSS-Protection "1; mode=block";
+        add_header Referrer-Policy "origin";
+    }
+}

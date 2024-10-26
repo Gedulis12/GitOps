@@ -1,0 +1,15 @@
+#{{ ansible_managed }}
+# default error
+server {
+    listen 80 default_server;
+    server_name _;
+    return 500;
+}
+
+server {
+    listen 443 default_server;
+    server_name _;
+    ssl_certificate /etc/nginx/selfsigned/selfsigned.pem;
+    ssl_certificate_key /etc/nginx/selfsigned/selfsigned.key;
+    return 500;
+}

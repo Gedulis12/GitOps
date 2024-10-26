@@ -6,7 +6,7 @@ services:
     image: thelounge/thelounge:latest
     container_name: thelounge
     ports:
-      - {{ thelounge_port }}:9000
+      - {{ thelounge.port }}:9000
     restart: always
     volumes:
       - {{ docker_home_dir }}/thelounge/config:/var/opt/thelounge

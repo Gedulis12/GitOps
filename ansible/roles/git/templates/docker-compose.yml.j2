@@ -27,7 +27,7 @@ services:
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
     ports:
-      - {{ gitea.web_ui_port }}:3000
+      - {{ gitea.port }}:3000
       - {{ gitea.ssh_port }}:22
     depends_on:
       - db

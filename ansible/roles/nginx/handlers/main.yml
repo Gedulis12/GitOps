@@ -1,0 +1,6 @@
+---
+- name: Restart nginx
+  community.docker.docker_compose:
+    project_src: "{{ docker_home_dir }}/nginx/"
+    build: false
+    restarted: true
