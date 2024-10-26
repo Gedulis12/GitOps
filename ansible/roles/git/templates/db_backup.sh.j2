@@ -1,0 +1,19 @@
+#!/bin/bash
+
+SCRIPT_DIR=$(dirname "$0")
+pushd $SCRIPT_DIR
+
+DUMP_DIR=backup
+DUMP_FILE="gitea-mysql-backup-$(date +%Y-%m-%d_%H:%M:%S).sql"
+BACKUP="$DUMP_DIR/$DUMP_FILE"
+
+mkdir -p $DUMP_DIR
+docker exec gitea_db mysqldump -u {{ gitea.db.user }} --password={{ gitea.db.password }} --databases {{ gitea.db.database }} > $BACKUP 2>$BACKUP.error.log
+
+if [ $? -eq 0 ]; then
+    echo "database dump created sucesfully at: $BACKUP"
+else
+    echo "failed to create a database dump. More details in $BACKUP.error.log"
+fi
+
+popd

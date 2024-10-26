@@ -27,6 +27,8 @@
       dest: stop.sh
     - src: restart.sh.j2
       dest: restart.sh
+    - src: db_backup.sh.j2
+      dest: db_backup.sh
 
 - name: Making .sh files executable
   file: dest={{ docker_home_dir }}/gitea/{{ item.file }} mode=a+x
